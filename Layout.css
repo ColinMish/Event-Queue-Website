@@ -12,7 +12,8 @@ h1 {
 }
 
 p {
-    font-family: "Times New Roman";
+    font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
+    font-weight: bold;
     font-size: 20px;
 	border: 1px solid;
 	margin:5%;
