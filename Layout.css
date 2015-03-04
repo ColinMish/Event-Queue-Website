@@ -39,11 +39,13 @@ list-style-type : none;
 list-style-image : none;
 text-transform : uppercase;
 }
+
 #menu li {
 float : left;
 width : 7em;
 border-right : 1px solid #777750;
 }
+
 #menu a {
 display : block;
 height : 95px;
@@ -56,11 +58,14 @@ text-align : center;
 color : #333;
 background : #cccc9a;
 }
+
 #menu a:hover {
 text-decoration : none;
 color : #fff;
 background : #999967;
 }
+
+
 		/*3 COLUMN LAYOUT */
 #gutter {
 float : left;
@@ -70,10 +75,11 @@ height : 1px;
 
 #col1 {
 float : left;
-width : 42%;
+width : 62%;
 margin-bottom : 1em;
 border-right : 1px solid #ccc;
 padding-right : 3%;
+padding-left : 2%;
 }
 #col2 {
 float : left;
@@ -98,11 +104,12 @@ padding : 0.5em;
 text-align : left;
 }
 
+
 		/*ROUNDED CORNERS */
 .box {
 background : #cccc9a;
 color : #777750;
-text-align : center;
+text-align : left;
 font-weight : bold;
 }
 .boxtop {
@@ -111,6 +118,9 @@ background : url(images/ne.gif) no-repeat top right;
 .boxtop div {
 height : 10px;
 background : url(images/nw.gif) no-repeat top left;
+
+height : 10px;
+background : url(images/sw.gif) no-repeat bottom left;
 }
 .boxbottom {
 background : url(images/se.gif) no-repeat bottom right;
@@ -122,6 +132,15 @@ background : url(images/sw.gif) no-repeat bottom left;
 .boxcontent {
 padding : 0 10px 0 10px;
 }
+
+.boxImg {
+background : #cccc9a;
+color : #777750;
+text-align : center;
+font-weight : bold;
+}
+
+
 		/*TYPOGRAPHY */
 h2 {
 margin-top : 0;

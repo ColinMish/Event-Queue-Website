@@ -6,13 +6,14 @@
 </head>
 
 <body>
-	<h1>Event Queues</h1>
+<div id="col1">
+	<h2>Event Queues</h2>
 		<p><b>What is an event queue?</b><br>
-		An event queue is a <i>data structure</i> that is used for <i>event handling</i> in <i>event driven applications and programming.</i> As the event handler is not always available due to it working on other events the events instead queue up in a data structure called an event queue and wait their turn to be processed by the event handler. Event handling is asynchronous meaning events <i>fire and forget</i>, they do not wait for a resolution before processing the next event in order to allow everything else to carry on working smoothly.
+		An event queue is a data structure that is used for <b>event handling</b> in <b>event driven applications and programming.</b> As the event handler is not always available due to it working on other events the events instead queue up in a data structure called an event queue and wait their turn to be processed by the event handler. Event handling is asynchronous meaning events <i>fire and forget</i>, they do not wait for a resolution before processing the next event in order to allow everything else to carry on working smoothly.
+	
 	<div class="box">
 		<div class="boxtop">
-					<p><b> What is an event? </b><br>
-
+					<p><b> What is an event? </b>
 					<p>An event is an action (key press, mouse click, system occurrence etc) that is detected by the program and can then be handled by the program, usually with a synchronous approach. A program that changes its behaviour in response to events is called event-driven.</p>
 		</div>
 	</div>
@@ -20,20 +21,90 @@
 	<br>
 	
 	<h2> About the pattern </h2>
-	<p> The event queue pattern is a decoupling design pattern (sometimes called  ‘message queue’, ‘event loop’, ‘message pump’). Decoupled code usually means it is easier to change one piece of code without breaking another. In the case of event queues, this usually refers to the two communicating objects (an event sender and an event handler).
-	The pattern stores the event in a first-in-first-out order (queue) to handle them at a later time. The events can be handled directly or it can be routed to another party that might be better suited to handle that particular event.  <br> In short, an event queue can be described as a sort-of To-Do-list of of events that are waiting to be handled. </p>
+	<p> The event queue pattern is a <b>decoupling design pattern </b>(sometimes called  ‘message queue’, ‘event loop’, ‘message pump’). Decoupled code usually means it is easier to change one piece of code without breaking another. In the case of event queues, this usually refers to the two communicating objects (an event sender and an event handler).
+		<br> <br>
+		The pattern stores the event in a first-in-first-out order (queue) to handle them at a later time. The events can be handled directly or it can be routed to another party that might be better suited to handle that particular event.  <br> In short, an event queue can be described as a sort-of To-Do-list of of events that are waiting to be handled. </p>
 	<br>
 
 	<h2> Event Queues </h2>
-Queues can store two thing: Events - things that already happened (enemy slain), or Messages - things that you would like to happen in the future (play audio). One is in the past (events) and the other is in the future (messages) so to speak.
-Anything in an event queue has already happened. <br>
-In a video game where you slay an enemy an event “entity slain” is triggered and added to the event queue. This event however needs time to work its way to the front of the queue and then additional information is needed - what entity was slain? Is that information still available or has the entity just been deleted? How much experience does the player get? What other events need to be triggered now (drop loot, victory music, start cutscene)? Especially on destructive events such as slaying an enemy care must be taken to record the information so that the event can be handled properly when it gets to the front of the queue.
-For a queue that stores events, you will most likely have multiple entities listening in on it. A messages queue on the other hand will probably only have one listener. The word “single-cast” is used to describe the single listener queue while “broadcast” is usually used for a multi-listener queue. The event queue can be either or. <br>
-<br>
-A multi-listener queue can also be a “work” queue.  The difference between a “work” queue and a “broadcast” queue is, while in a “broadcast” queue every listener receives the sent event, in a “work” queue each one of the listeners receives only one of the items in the event queue (another way to phrase it is that an event only goes to one listener). This requires some sort of scheduling system, in order to select the best listener for the job.
+		<p> Queues can store two thing: <b>Events</b> - things that already happened (enemy slain), or <b>Messages</b> - things that you would like to happen in the future (play audio). One is in the past (events) and the other is in the future (messages) so to speak.
+			Anything in an event queue has already happened. <br> <br>
+			In a video game where you slay an enemy an event “entity slain” is triggered and added to the event queue. This event however needs time to work its way to the front of the queue and then additional information is needed - what entity was slain? Is that information still available or has the entity just been deleted? How much experience does the player get? What other events need to be triggered now (drop loot, victory music, start cutscene)? Especially on destructive events such as slaying an enemy care must be taken to record the information so that the event can be handled properly when it gets to the front of the queue.
+		<br>
+		<br>
+			For a queue that stores events, you will most likely have multiple entities listening in on it. A messages queue on the other hand will probably only have one listener. The word “single-cast” is used to describe the <b> single listener queue </b> while “broadcast” is usually used for a <b> multi-listener queue </b>. The event queue can be either or.
+		</p>
+		<p> A <b>multi-listener queue</b> can also be a “work” queue.  The difference between a “work” queue and a “broadcast” queue is, while in a “broadcast” queue every listener receives the sent event, in a “work” queue each one of the listeners receives only one of the items in the event queue (another way to phrase it is that an event only goes to one listener). 
+			This requires some sort of scheduling system, in order to select the best listener for the job.
+		</p>
+		<br>
+
+
+
+	<h2> Designing Queues </h2>
+		<p>
+			Implementing an event queue can be done in different ways. Mostly its done using an array, but it can be done as a ring buffer as well.
+			The problem with arrays is both the head and the tail of the queue will migrate towards the end of the array. When the end is reached, then that’s that. Events can’t be added to the queue anymore because there isn’t anymore space to store them in.
+ 		<br> <br>
+			A <b>ring buffer</b> offers a solution to that problem. It’s implemented by sending the tail back to the array’s beginning when it reaches the end, thus creating a circular array.
+			However this raises a new problem to be aware of; if the ring array gets full, the tail might overwrite the events already stored as it continues along. To avoid that, an assertion can be used.
+		</p>
+	
+			<div class="boxImg">
+ 				<div class="topbox"> 
+					<img src="images/event-queue-ring.png" alt="Ring queue" height="70%" width="80%">
+				</div>
+			</div>	
+	
+	
+	<br>
+	<h2> The scary dangers of event queues... </h2>
+		<p>
+			Central event queues are <b>global variables</b>, meaning every part of the code can poke at it. So obviously care must be taken as with all global variables to ensure that it works as it should. 
+			A central event queue however can be very useful to make sure that all events are happening in exactly the order they should be, where multiple event queues may result in events triggering before they should.
+		<br>	<br>
+		<div class="box">
+ 			<div class="topbox"> 
+				An event queue can get stuck in infinite event call loops, so be ware. All event and message systems have to worry about cycles:
+		<br>
+			<ol>
+				<li>A sends an event.</li>
+				<li>B receives it and responds by sending an event.</li>
+				<li>That event happens to be one that A cares about, so it receives it. In response, it sends an event…</li>
+				<li>Go to 2.</li>
+			</ol>
+			</div>
+		</div>	
+
+			An event queue however will always wind down due to its asynchronous nature (events are processed without having to wait for a response). So looping events can happen in an event queue but it will not lock up the system and crash. 
+			A common method to prevent looping is to avoid sending events from within code that handles events.
+			<br> <br>
+
+						<img src="images/events-queue.gif" alt="Event queue" align="left" height="60%" width="60%">
 
 		
-	
+		</p>
+		<br> <br> <br> <br> <br> <br>
+		
+			<h2> So... why use an event queue?</h2>
+		<p>
+				Events will often occur <b>asynchronously</b>in the middle of the game loop. 
+				If you process them as they come in you can end up with concurrency bugs, causing the game to crash. This is because its processing the event while the game loop thread is updating the same data. The game might also frequently stopping while the event handler waits for events to finish processing.
+				
+				<br> <br>
+				The pattern aids in separating the sender from the receiver from each other statically and in time. While other patterns might be able to decouple the receiver and the sender with less complexity, the Event queue pattern can be used when decouple them in time. 
+				The queue acts as a kind of buffer between the two.
+		
+		
+			<div class="box">
+ 				<div class="topbox"> 
+
+				</div>
+			</div>	
+		</p>
+		
+</div>
+
 </body>
 
 </html>
