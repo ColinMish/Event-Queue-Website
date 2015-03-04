@@ -131,6 +131,7 @@ letter-spacing : 3px;
 border-bottom : 1px solid #ccc;
 color : #666;
 background : inherit;
+margin : 5%;
 }
 h3 {
 margin-top : 0;
@@ -147,20 +148,31 @@ color : #777850;
 }
 		/*LINKS */
 a:link, a:visited {
-color : #9b696f;
-background : inherit;
-text-decoration : underline;
+    display: block;
+    width: 120px;
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: #ADBE8B;
+    text-align: center;
+    padding: 4px;
+    text-decoration: none;
+    text-transform: uppercase;
 }
-a:hover {
-color : #777750;
-background : inherit;
-text-decoration : none;
-}
-a:active {
-color : #666;
-background : inherit;
-text-decoration : none;
+a:hover, a:active {
+    background-color: #8A986F;
 }
 a img {
 border : 0;
+}
+p {
+	margin : 5%;
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+li {
+    float: left;
 }
