@@ -34,8 +34,8 @@
 		<br>
 			For a queue that stores events, you will most likely have multiple entities listening in on it. A messages queue on the other hand will probably only have one listener. The word “single-cast” is used to describe the <b> single listener queue </b> while “broadcast” is usually used for a <b> multi-listener queue </b>. The event queue can be either or.
 		</p>
-		<p> A <b>multi-listener queue</b> can also be a “work” queue.  The difference between a “work” queue and a “broadcast” queue is, while in a “broadcast” queue every listener receives the sent event, in a “work” queue each one of the listeners receives only one of the items in the event queue (another way to phrase it is that an event only goes to one listener). 
-			This requires some sort of scheduling system, in order to select the best listener for the job.
+		<p> A <b>multi-listener queue</b> can also be a “work” queue.  The difference between a “work” queue and a “broadcast” queue is a “broadcast” queue sends the event to every listener. A “work” queue only sends the event to one of the listeners. It's a good way to deligate tasks. 
+			This requires some sort of scheduling system though, in order to determine and select the listener which is best able to handle the event.
 		</p>
 		<br>
 
@@ -43,8 +43,11 @@
 
 	<h2> Designing Queues </h2>
 		<p>
+			As always it's important to figure out what the event queue is for. Will it be used to delegate tasks to different listeners, or does it need to broadcast an event to all? Perhaps you need to use multiple queues? Which approach suits the situation best?
+			<br> <br>
 			Implementing an event queue can be done in different ways. Mostly its done using an array, but it can be done as a ring buffer as well.
-			The problem with arrays is both the head and the tail of the queue will migrate towards the end of the array. When the end is reached, then that’s that. Events can’t be added to the queue anymore because there isn’t anymore space to store them in.
+			The problem with arrays is both the head and the tail of the queue will migrate towards the end of the array. 
+			When the end is reached, then that’s that. Events can’t be added to the queue anymore because there isn’t anymore space to store them in.
  		<br> <br>
 			A <b>ring buffer</b> offers a solution to that problem. It’s implemented by sending the tail back to the array’s beginning when it reaches the end, thus creating a circular array.
 			However this raises a new problem to be aware of; if the ring array gets full, the tail might overwrite the events already stored as it continues along. To avoid that, an assertion can be used.
@@ -60,6 +63,9 @@
 	<br>
 	<h2> The scary dangers of event queues... </h2>
 		<p>
+			If the event queue is unavailable when an event is sent, that event will be lost. An event queue will be unavailable if it's not implemented, deleted or if it's full. 
+			It is possible to store the event in a remote queue for undelivered messages if that has been implemented. This queue is called the dead-letter queue.
+			<br> <br>
 			Central event queues are <b>global variables</b>, meaning every part of the code can poke at it. So obviously care must be taken as with all global variables to ensure that it works as it should. 
 			A central event queue however can be very useful to make sure that all events are happening in exactly the order they should be, where multiple event queues may result in events triggering before they should.
 		<br>	<br>
